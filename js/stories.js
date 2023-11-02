@@ -50,3 +50,21 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+// creates new story object when new post form is submitted
+
+async function submitNew(evt) {
+  console.debug("new post form submitted", evt);
+  evt.preventDefault();
+  //capturing form data
+  const title = $("#post-title").val();
+  const url = $("#post-url").val();
+  const author = $("#post-author").val();
+
+  const newStory = new Story({ title, author, url });
+
+  await storyList.addStory(currentUser, newStory);
+  getAndShowStoriesOnStart();
+}
+
+$("#submit-form").on("submit", submitNew);
