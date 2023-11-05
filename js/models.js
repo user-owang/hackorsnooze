@@ -190,4 +190,20 @@ class User {
       return null;
     }
   }
+  //add a story to the favorites list
+  async addFavorite(username, storyID) {
+    const response = await axios({
+      url: `${BASE_URL}/users/${username}/favorites/${storyID}`,
+      method: "POST",
+      data: { token: currentUser.loginToken },
+    });
+  }
+  //remove a story from the favorites list
+  async removeFavorite(username, storyID) {
+    const response = await axios({
+      url: `${BASE_URL}/users/${username}/favorites/${storyID}`,
+      method: "DELETE",
+      data: { token: currentUser.loginToken },
+    });
+  }
 }

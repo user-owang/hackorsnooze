@@ -107,10 +107,43 @@ function saveUserCredentialsInLocalStorage() {
  * - generate the user profile part of the page
  */
 
-function updateUIOnUserLogin() {
+async function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
   hidePageComponents();
+  await getAndShowStoriesOnStart();
   $allStoriesList.show();
 
   updateNavOnLogin();
 }
+
+// favorite click handler
+
+async function favoriteClick(evt) {
+  await currentUser.addFavorite(
+    currentUser.username,
+    evt.target.parentElement.id
+  );
+  currentUser = await User.loginViaStoredCredentials(
+    localStorage.token,
+    localStorage.username
+  );
+  putStoriesOnPage();
+}
+
+// unfavorite click handler
+
+async function unfavoriteClick(evt) {
+  await currentUser.removeFavorite(
+    currentUser.username,
+    evt.target.parentElement.id
+  );
+  currentUser = await User.loginViaStoredCredentials(
+    localStorage.token,
+    localStorage.username
+  );
+  putStoriesOnPage();
+}
+
+//adding click listener for favorite/unfavorite
+$("#all-stories-list").on("click", "span.unfavorite", unfavoriteClick);
+$("#all-stories-list").on("click", "span.favorite", favoriteClick);

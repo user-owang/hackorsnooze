@@ -23,9 +23,37 @@ function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
-  return $(`
+  if (!currentUser) {
+    return $(`
       <li id="${story.storyId}">
         <a href="${story.url}" target="a_blank" class="story-link">
+          ${story.title}
+        </a>
+        <small class="story-hostname">(${hostName})</small>
+        <small class="story-author">by ${story.author}</small>
+        <small class="story-user">posted by ${story.username}</small>
+      </li>
+    `);
+  }
+  if (
+    currentUser.favorites
+      .map((favorite) => favorite.storyId)
+      .includes(story.storyId)
+  ) {
+    return $(`
+      <li id="${story.storyId}">
+        <span class="unfavorite">&starf; </span><a href="${story.url}" target="a_blank" class="story-link">
+          ${story.title}
+        </a>
+        <small class="story-hostname">(${hostName})</small>
+        <small class="story-author">by ${story.author}</small>
+        <small class="story-user">posted by ${story.username}</small>
+      </li>
+    `);
+  }
+  return $(`
+      <li id="${story.storyId}">
+      <span class="favorite">&star; </span><a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
         <small class="story-hostname">(${hostName})</small>
@@ -64,6 +92,7 @@ async function submitNew(evt) {
   const newStory = new Story({ title, author, url });
 
   await storyList.addStory(currentUser, newStory);
+  hidePageComponents();
   getAndShowStoriesOnStart();
 }
 
