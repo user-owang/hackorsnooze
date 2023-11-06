@@ -6,10 +6,11 @@
 
 /** Show main list of all stories when click site name */
 
-function navAllStories(evt) {
+async function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
-  putStoriesOnPage();
+
+  await getAndShowStoriesOnStart();
 }
 
 $body.on("click", "#nav-all", navAllStories);
@@ -40,6 +41,34 @@ function updateNavOnLogin() {
   $(".main-nav-links").show();
   $navLogin.hide();
   $navLogOut.show();
-  $navSubmit.show();
+  $navUserLinks.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
+
+//show user submitted stories
+
+async function myPosts() {
+  currentUser = await User.loginViaStoredCredentials(
+    localStorage.token,
+    localStorage.username
+  );
+  storyList.stories = currentUser.ownStories;
+  putStoriesOnPage();
+  $allStoriesList.prepend(
+    '<button id="delete-button">Delete Story</button><button id="cancel-button" class="hidden">Cancel</button>'
+  );
+}
+
+$navUserLinks.on("click", "#user-stories", myPosts);
+
+//show user favorited stories
+async function myFaves() {
+  currentUser = await User.loginViaStoredCredentials(
+    localStorage.token,
+    localStorage.username
+  );
+  storyList.stories = currentUser.favorites;
+  putStoriesOnPage();
+}
+
+$navUserLinks.on("click", "#favorite-stories", myFaves);

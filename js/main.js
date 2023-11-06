@@ -13,7 +13,10 @@ const $signupForm = $("#signup-form");
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
+const $navUserLinks = $(".user-nav");
 const $navSubmit = $("#submit-post");
+const $navFav = $("#favorite-stories");
+const $navMyPosts = $("#user-stories");
 
 const $newPost = $(".new-post");
 const $newPostForm = $("#submit-form");

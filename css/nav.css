@@ -21,3 +21,11 @@ nav {
   margin-left: auto;
   text-align: right;
 }
+
+.navbar-brand .user-nav .nav-link {
+  font-size: 0.85rem;
+  margin: 0px;
+  font-weight: 400;
+  border-left: solid 3px black;
+  padding: 0 3px;
+}
