@@ -3,6 +3,10 @@
 body {
   font-family: Arimo, sans-serif;
   margin: 8px 7.5vw;
+  min-height: 100vh;
+  background-image: radial-gradient(circle, pink, skyblue);
+  background-repeat: no-repeat;
+  background-size: fill;
 }
 
 h1 {
@@ -29,7 +33,6 @@ a:hover {
   text-decoration: underline;
 }
 
-
 /* Site layout */
 
 /* This is the basic box that the main part of the page goes into */
@@ -43,7 +46,6 @@ a:hover {
 .hidden {
   display: none;
 }
-
 
 /* Forms */
 
@@ -105,7 +107,6 @@ form > hr {
 .login-input label {
   width: 70px;
 }
-
 
 /* responsive queries for tightening things up for mobile. */
 
